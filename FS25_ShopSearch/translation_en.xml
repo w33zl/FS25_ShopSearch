@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>w33zl</translationContributors>
+    <texts>
+        <text name="input_SORT_SHOP" text="Search Store" />
+        <text name="dialogTitle" text="Search" />
+    </texts>
+</l10n>

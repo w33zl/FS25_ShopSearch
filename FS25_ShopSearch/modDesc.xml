@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="no"?>
+<modDesc descVersion="94" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/NMC-TBone/xml-schema/main/modDesc.xsd">
+    <author>w33zl</author>
+    <version>0.5.0.0-dev</version>
+    <title>
+        <en>[DEV] Store Search</en>
+    </title>
+    <description>
+        <en><![CDATA[ DO NOT FORGET A DESCRIPTION - CHANGE THIS! ]]></en>
+    </description>
+    <iconFilename>icon_ShopSearch.dds</iconFilename>
+    <multiplayer supported="true" />
+    <!-- <l10n filenamePrefix="language" /> -->
+    <extraSourceFiles>
+        <sourceFile filename="lib/LogHelper.lua" />
+        <sourceFile filename="lib/ModHelper.lua" />
+        <sourceFile filename="ShopSearch.lua" />
+    </extraSourceFiles>
+    <inputBinding>
+		<actionBinding action="SEARCH_SHOP">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_f"/>
+		</actionBinding>
+    </inputBinding>
+    <actions>
+        <action name="SEARCH_SHOP" />
+	</actions>        
+
+</modDesc>
