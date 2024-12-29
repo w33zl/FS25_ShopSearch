@@ -80,20 +80,11 @@ end
 
 
 function ShopSearch:doSearch(text)
-    -- local v19 = p17:makeSelfCallback(p17.onClickItemCategory)
-    -- p17.pageShopVehicles:initialize(g_storeManager:getCategoryTypes(), g_shopController:getShopCategories(), v19, v18, g_i18n:getText(ShopMenu.L10N_SYMBOL.HEADER_VEHICLES), ShopMenu.SLICE_ID.VEHICLES, ShopMenu.LIST_CELL_NAME_CATEGORY, ShopMenu.LIST_EMPTY_CELL_NAME_CATEGORY)    
-    
-    -- local v142 = g_shopController:getVehicleCategories()[p140]
-    -- p139:popDetail()
-    -- p139:onClickItemCategory(v142.id, g_i18n:getText(ShopMenu.L10N_SYMBOL.HEADER_VEHICLES), v142.label, ShopMenu.SLICE_ID.VEHICLES, p139.currentCategoryFilter)
-
-    -- p171:changeScreen(ShopMenu)
-	-- p171:goToPage(p171.pageShopVehicles)
-	-- p171:onClickItemCategory(ShopController.COINS_CATEGORY, nil, g_i18n:getText("ui_coins"))
-
-			-- p16:addCategoryForDisplay(g_storeManager:getCategoryByName(ShopController.COINS_CATEGORY))
+    local executionTimer = DevHelper.measureStart("Search took %d ms.")
     local displayItems = self:filterStoreItems(text)
     self:displaySearchResults(displayItems, text)
+    executionTimer:stop(true)
+    Log:info("Searching for '%s' resulted in %d hits, search took %.2f ms.", text, #displayItems, executionTimer.diff * 1000)
 end
 
 function ShopSearch:filterStoreItems(text)
@@ -160,9 +151,9 @@ function ShopSearch:filterStoreItems(text)
         end
     end
 
-    local executionTimer = DevHelper.measureStart("Search took %d ms")
+    -- local executionTimer = DevHelper.measureStart("Search took %d ms")
     table.foreach(g_storeManager:getItems(), filterStoreItem)
-    executionTimer:stop()
+    -- executionTimer:stop()
 
     return displayItems
 end
