@@ -245,13 +245,10 @@ function ShopSearch:showDialog()
             --     clickOk = clickOk,
             --     args = args,
             -- }, 2)
+
+            --TODO: add check for min text lengfht
             if clickOk then
                 Log:debug("Search for %s", text)
-                -- Log:debug("Click OK")
-                -- Log:var("text", text)
-                -- Log:var("args", args)
-                -- Log:var("self", self)
-                -- Log:var("clickOk", clickOk)
                 self:doSearch(text)
             else
                 Log:debug("Cancelled")
@@ -259,10 +256,10 @@ function ShopSearch:showDialog()
         end,
         target = nil,
         defaultText = "", -- "Default text",
-        dialogPrompt = "Search Store:",
+        dialogPrompt = dialogTitle,
         imePrompt = "",
         maxCharacters = 40,
-        confirmText = "Search",
+        confirmText = g_i18n:getText("searchButton"),
         -- callbackArgs = {  },
         inputText = "",
         applyTextFilter = false

@@ -2,7 +2,9 @@
 <l10n>
     <translationContributors>w33zl</translationContributors>
     <texts>
-        <text name="input_SORT_SHOP" text="Search Store" />
-        <text name="dialogTitle" text="Search" />
+        <text name="input_SEARCH_SHOP" text="Search Store" />
+        <text name="dialogTitle" text="Search store:" />
+        <text name="searchButton" text="Search" />
+        <text name="searchResultsHeader" text="Search Results" />
     </texts>
 </l10n>
