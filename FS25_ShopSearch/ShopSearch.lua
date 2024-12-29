@@ -309,3 +309,8 @@ end)
 --     Log:debug("TabbedMenuWithDetails.onDetailOpened")
 --     return superFunc(self, ...)
 -- end)
+
+-- ShopItemsFrame.setHeader = Utils.overwrittenFunction(ShopItemsFrame.setHeader, function(self, superFunc, headerText, headerIconSlice)
+--     -- Log:debug("ShopItemsFrame.setHeader")
+--     return superFunc(self, headerText .. " [SORT: SPEED, ASCENDING, NO GROUPING]", headerIconSlice)
+-- end)
