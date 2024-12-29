@@ -11,8 +11,11 @@ Changelog:
 
 ShopSearch = Mod:init()
 
+ShopSearch:source("lib/DevHelper.lua")
+
 -- Event that is executed when your mod is loading (after the map has been loaded and before the game starts)
 function ShopSearch:loadMap(filename)
+    self.shopMenu = g_shopMenu
 end
 
 -- Event that is continuously, USE WITH CAUTION! Any demanding code here (even just a simple "print()" command) will cause poor performance, stuttering and FPS drops
@@ -106,7 +109,7 @@ TabbedMenuWithDetails.onOpen = Utils.overwrittenFunction(TabbedMenuWithDetails.o
     local returnValue superFunc(self, ...)
     -- Log:var("g_shopMenu.isOpen", g_shopMenu.isOpen)
     if g_shopMenu.isOpen then
-        -- ShopSearch:registerHotkeys()
+        ShopSearch:registerHotkeys()
     end
     
     return returnValue
