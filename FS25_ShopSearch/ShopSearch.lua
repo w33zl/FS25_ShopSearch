@@ -100,8 +100,6 @@ function ShopSearch:filterStoreItems(text)
     local MAX_ITEMS = 5000
     local displayItems = {}
 
-    
-
     local function convertTextToPattern(text)
         text = string.trim(text or "")
         local pattern = ""
@@ -116,7 +114,7 @@ function ShopSearch:filterStoreItems(text)
 
     local function getAuthorName(storeItem)
         if not storeItem.isMod or not storeItem.customEnvironment then
-            Log:debug("Not a mod: %s", storeItem.name)
+            -- Log:debug("Not a mod: %s", storeItem.name)
             return ""
         end
         local customEnvironment = storeItem.customEnvironment
@@ -131,7 +129,7 @@ function ShopSearch:filterStoreItems(text)
         end
         local isMatch = string.find(value, searchText) ~= nil
         if isMatch then
-            Log:debug("Match: '%s' using value '%s' with pattern '%s'", storeItem.name, value, searchText)
+            -- Log:debug("Match: '%s' using value '%s' with pattern '%s'", storeItem.name, value, searchText)
             storeItem.matchWeight = (storeItem.matchWeight or 0) + weight
         end
         return isMatch
@@ -144,29 +142,13 @@ function ShopSearch:filterStoreItems(text)
             return true
         end
 
-        -- for _, storeItem in pairs(g_storeManager:getItems()) do
         local isHidden = storeItem.isBundleItem or not (storeItem.showInStore and (storeItem.species == StoreSpecies.VEHICLE or storeItem.species == StoreSpecies.HANDTOOL))
 
         if isHidden then
-            print("Was hidden")
+            -- print("Was hidden")
             return
         end
 
-        -- print("search")
-
-        -- if storeItem.isMod then
-        --     Log:debug("%d: Is mod item: %s [%d]", i, storeItem.name, storeItem.id)
-        --     return
-        -- end
-
-        -- local isMod
-        -- if storeItem.customEnvironment == nil then
-        -- 	isMod = false
-        -- else
-        -- 	isMod = storeItem.species == StoreSpecies.VEHICLE
-        -- end
-        -- if not isHidden then
-        --TODO: add match weights and calculate result sort score
         local isMatch = false
         isMatch = isMatch or tryMatch(storeItem, storeItem.name, 1.2)
         isMatch = isMatch or tryMatch(storeItem, storeItem.dlcTitle, 0.9)
@@ -175,11 +157,7 @@ function ShopSearch:filterStoreItems(text)
         if isMatch then
             local displayItem = g_shopController:makeDisplayItem(storeItem)
             table.insert(displayItems, displayItem)
-            -- if #displayItems >= MAX_ITEMS then
-            --     return
-            -- end
         end
-        -- end        
     end
 
     local executionTimer = DevHelper.measureStart("Search took %d ms")
@@ -208,30 +186,6 @@ function ShopSearch:displaySearchResults(items, text)
     shopMenu:pushDetail(shopMenu.pageShopItemDetails)
     shopMenu:updateSubPageSelector()
 end
-
--- function ShopMenu.viewVehicle(self, vehicleFilename)
--- 	local vehicleFilename = vehicleFilename:gsub("\\", "/")
--- 	local basePath = getAppBasePath()
--- 	if vehicleFilename:startsWith(basePath) then
--- 		vehicleFilename = vehicleFilename:sub(basePath:len() + 1)
--- 	end
--- 	local storeItem = g_storeManager:getItemByXMLFilename(vehicleFilename)
--- 	if storeItem ~= nil then
--- 		g_gui:changeScreen(nil, ShopMenu)
--- 		local category = nil
--- 		for i = 1, #storeItem.categoryNames do
--- 			category = g_storeManager:getCategoryByName(storeItem.categoryNames[i])
--- 			if category ~= nil then
--- 				break
--- 			end
--- 		end
--- 		if category ~= nil then
--- 			self:onClickItemCategory(category.name, g_i18n:getText(ShopMenu.L10N_SYMBOL.HEADER_VEHICLES), category.title, self.currentCategoryFilter)
--- 		end
--- 		g_shopMenu:showConfigurationScreen(storeItem, nil, nil)
--- 	end
--- end
-
 
 function ShopSearch:showDialog()
 
@@ -278,10 +232,6 @@ function ShopSearch:getItemsByCategory(shopController, superFunc, ...)
     Log:debug("ShopController.getItemsByCategory")
 
     local items = superFunc(shopController, ...)
-
-    -- for i = 1, #items do
-    --     Log:debug("#%d: %s [%d]: %d", i, items[i].storeItem.name, items[i].storeItem.id, items[i].orderValue)
-    -- end
 
     return items
 end
