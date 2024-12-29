@@ -3,10 +3,18 @@
     <author>w33zl</author>
     <version>0.5.0.0-dev</version>
     <title>
-        <en>[DEV] Store Search</en>
+        <en>Store Search</en>
     </title>
     <description>
-        <en><![CDATA[ DO NOT FORGET A DESCRIPTION - CHANGE THIS! ]]></en>
+<en><![CDATA[
+Adds a search function to the in-game store. Pressing the F key (configurable) when the store menu is open will display a search dialog.
+
+The search function supports the following fields
+- Equipment name (e.g. 'Vario')
+- Brand name (e.g. 'Massey')
+- Mod name (e.g. 'Allis')
+- Mod author (e.g. 'Giants')
+]]></en>
     </description>
     <iconFilename>icon_ShopSearch.dds</iconFilename>
     <multiplayer supported="true" />
