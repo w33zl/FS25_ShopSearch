@@ -93,7 +93,7 @@ function ShopSearch:doSearch(text)
 
 			-- p16:addCategoryForDisplay(g_storeManager:getCategoryByName(ShopController.COINS_CATEGORY))
     local displayItems = self:filterStoreItems(text)
-    self:displaySearchResults(displayItems)
+    self:displaySearchResults(displayItems, text)
 end
 
 function ShopSearch:filterStoreItems(text)
@@ -189,7 +189,7 @@ function ShopSearch:filterStoreItems(text)
     return displayItems
 end
 
-function ShopSearch:displaySearchResults(items)
+function ShopSearch:displaySearchResults(items, text)
     local shopMenu = self.shopMenu
     -- local items = g_shopController:getItemsByCategory(categoryName)
     shopMenu.currentCategoryName = "misc"
@@ -199,7 +199,12 @@ function ShopSearch:displaySearchResults(items)
     shopMenu.pageShopItemDetails:setDisplayItems(items)
     shopMenu:updateSubPageSelector()
     
-    shopMenu.pageShopItemDetails:setCategory("DRIVABLES", "SEARCH RESULTS", ShopMenu.SLICE_ID.VEHICLES)
+
+    -- Display text should be max 20 characters from 'text'
+    local displayText = string.sub(text, 1, 20)
+    local headerText = g_i18n:getText("searchResultsHeader") .. ": " .. displayText
+
+    shopMenu.pageShopItemDetails:setCategory("SEARCH", headerText, ShopMenu.SLICE_ID.VEHICLES)
     shopMenu:pushDetail(shopMenu.pageShopItemDetails)
     shopMenu:updateSubPageSelector()
 end
