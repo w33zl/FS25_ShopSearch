@@ -18,43 +18,9 @@ function ShopSearch:loadMap(filename)
     self.shopMenu = g_shopMenu
 end
 
--- Event that is continuously, USE WITH CAUTION! Any demanding code here (even just a simple "print()" command) will cause poor performance, stuttering and FPS drops
-function ShopSearch:update(dt)
-end
 
--- Event that is executed when the player chooses to start the mission (after the map has been loaded and before the game starts)
-function ShopSearch:startMission()
-end
-
--- ShopController.getItemsByCategory = Utils.overwrittenFunction(ShopController.getItemsByCategory, function(self, superFunc, ...)
---     return XnhancedShopSorting:getItemsByCategory(self, superFunc, ...)
--- end)
-
-
--- ShopMenu.onOpen = Utils.overwrittenFunction(ShopMenu.onOpen, function(self, superFunc, ...)
---     Log:debug("ShopMenu.onOpen")
---     return superFunc(self, ...)
--- end)
-
--- ShopMenu.onClose = Utils.overwrittenFunction(ShopMenu.onClose, function(self, superFunc, ...)
---     Log:debug("ShopMenu.onClose")
---     return superFunc(self, ...)
--- end)
-
--- -- ShopMenu.onClickMenu = Utils.overwrittenFunction
-
--- ShopMenu.exitMenu = Utils.overwrittenFunction(ShopMenu.exitMenu, function(self, superFunc, ...)
---     Log:debug("ShopMenu.exitMenu")
---     return superFunc(self, ...)
--- end)
-
--- ShopMenu.onClickItemCategory = Utils.overwrittenFunction(ShopMenu.onClickItemCategory, function(self, superFunc, ...)
---     Log:debug("ShopMenu.onClickItemCategory")
---     return superFunc(self, ...)
--- end)
 
 function ShopSearch:registerHotkeys()
-    -- Log:debug("XnhancedShopSorting.registerHotkeys")
     local triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings = false, true, false, true, nil, true
     local success, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.SEARCH_SHOP, self, self.mainKeyEvent, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
 
@@ -76,8 +42,6 @@ function ShopSearch:mainKeyEvent()
         self:showDialog()
     end
 end
-
-
 
 function ShopSearch:doSearch(text)
     local executionTimer = DevHelper.measureStart("Search took %d ms.")
@@ -160,17 +124,14 @@ end
 
 function ShopSearch:displaySearchResults(items, text)
     local shopMenu = self.shopMenu
-    -- local items = g_shopController:getItemsByCategory(categoryName)
     shopMenu.currentCategoryName = "misc"
     shopMenu.currentDisplayItems = items
-    -- shopMenu.currentCategoryFilter = filter
     shopMenu.currentItemDetailsType = ShopMenu.DETAILS.VEHICLE
     shopMenu.pageShopItemDetails:setDisplayItems(items)
     shopMenu:updateSubPageSelector()
     
-
     -- Display text should be max 20 characters from 'text'
-    local displayText = string.sub(text, 1, 20)
+    local displayText = string.sub(text, 1, 40)
     local headerText = g_i18n:getText("searchResultsHeader") .. ": " .. displayText
 
     shopMenu.pageShopItemDetails:setCategory("SEARCH", headerText, ShopMenu.SLICE_ID.VEHICLES)
@@ -183,7 +144,7 @@ function ShopSearch:showDialog()
     local dialogTitle = g_i18n:getText("dialogTitle") or g_modManager.nameToMod[g_currentModName].title
 
     TextInputDialog.createFromExistingGui({
-        onTextEntered = function(text, clickOk) -- self, text, clickOk, args
+        onTextEntered = function(text, clickOk) -- target, text, clickOk, args
             -- Log:table("onTextEntered", {
             --     self = self,
             --     text = text,
@@ -228,22 +189,20 @@ function ShopSearch:getItemsByCategory(shopController, superFunc, ...)
 end
 
 
-function ShopSearch:updateDisplayItems()
-    Log:debug("ShopSearch.updateDisplayItems")
-    -- g_shopMenu.pageShopItemDetails:setDisplayItems(g_shopMenu.currentDisplayItems)
-end
+-- function ShopSearch:updateDisplayItems()
+--     Log:debug("ShopSearch.updateDisplayItems")
+--     -- g_shopMenu.pageShopItemDetails:setDisplayItems(g_shopMenu.currentDisplayItems)
+-- end
 
-ShopItemsFrame.setDisplayItems = Utils.overwrittenFunction(ShopItemsFrame.setDisplayItems, function(self, superFunc, items, ...)
-    -- Log:debug("ShopItemsFrame.setDisplayItems")
-    if items and #items > 0 then 
+-- ShopItemsFrame.setDisplayItems = Utils.overwrittenFunction(ShopItemsFrame.setDisplayItems, function(self, superFunc, items, ...)
+--     -- Log:debug("ShopItemsFrame.setDisplayItems")
+--     if items and #items > 0 then 
         
-    end
-    return superFunc(self, items, ...)
-end)
+--     end
+--     return superFunc(self, items, ...)
+-- end)
 
 TabbedMenuWithDetails.onOpen = Utils.overwrittenFunction(TabbedMenuWithDetails.onOpen, function(self, superFunc, ...)
-    -- Log:debug("TabbedMenuWithDetails.onOpen")
-    
     local returnValue superFunc(self, ...)
     -- Log:var("g_shopMenu.isOpen", g_shopMenu.isOpen)
     if g_shopMenu.isOpen then
@@ -253,12 +212,3 @@ TabbedMenuWithDetails.onOpen = Utils.overwrittenFunction(TabbedMenuWithDetails.o
     return returnValue
 end)
 
--- TabbedMenuWithDetails.onDetailOpened = Utils.overwrittenFunction(TabbedMenuWithDetails.onDetailOpened, function(self, superFunc, ...)
---     Log:debug("TabbedMenuWithDetails.onDetailOpened")
---     return superFunc(self, ...)
--- end)
-
--- ShopItemsFrame.setHeader = Utils.overwrittenFunction(ShopItemsFrame.setHeader, function(self, superFunc, headerText, headerIconSlice)
---     -- Log:debug("ShopItemsFrame.setHeader")
---     return superFunc(self, headerText .. " [SORT: SPEED, ASCENDING, NO GROUPING]", headerIconSlice)
--- end)
