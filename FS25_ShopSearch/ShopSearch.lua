@@ -262,8 +262,14 @@ function ShopSearch:showDialog()
         confirmText = g_i18n:getText("searchButton"),
         -- callbackArgs = {  },
         inputText = "",
-        applyTextFilter = false
+        applyTextFilter = false --BUG: Doesn't work, maybe Giants forgot something?
     })
+
+    -- TextInputDialog.INSTANCE.applyTextFilter = false --HACK: trying to force this, nothing seems to work
+    -- TextInputDialog.INSTANCE.textElement.applyTextFilter = false
+    if TextInputDialog.INSTANCE.textElement then
+        TextInputDialog.INSTANCE.textElement.applyProfanityFilter = false --HACK: forcing this, 'applyTextFilter' doesn't seem to work
+    end
 
     
 end
