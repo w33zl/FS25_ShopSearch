@@ -73,7 +73,7 @@ function ShopSearch:mainKeyEvent()
     Log:debug("ShopSearch.mainKeyEvent")
     if g_shopMenu.isOpen then
         Log:debug("Open search...")
-        --TODO: here
+        self:showDialog()
     end
 end
 
@@ -228,6 +228,44 @@ end
 -- 	end
 -- end
 
+
+function ShopSearch:showDialog()
+
+    local dialogTitle = g_i18n:getText("dialogTitle") or g_modManager.nameToMod[g_currentModName].title
+
+    TextInputDialog.createFromExistingGui({
+        onTextEntered = function(text, clickOk) -- self, text, clickOk, args
+            -- Log:table("onTextEntered", {
+            --     self = self,
+            --     text = text,
+            --     clickOk = clickOk,
+            --     args = args,
+            -- }, 2)
+            if clickOk then
+                Log:debug("Search for %s", text)
+                -- Log:debug("Click OK")
+                -- Log:var("text", text)
+                -- Log:var("args", args)
+                -- Log:var("self", self)
+                -- Log:var("clickOk", clickOk)
+                self:doSearch(text)
+            else
+                Log:debug("Cancelled")
+            end
+        end,
+        target = nil,
+        defaultText = "", -- "Default text",
+        dialogPrompt = "Search Store:",
+        imePrompt = "",
+        maxCharacters = 40,
+        confirmText = "Search",
+        -- callbackArgs = {  },
+        inputText = "",
+        applyTextFilter = false
+    })
+
+    
+end
 
 function ShopSearch:getItemsByCategory(shopController, superFunc, ...)
     Log:debug("ShopController.getItemsByCategory")
