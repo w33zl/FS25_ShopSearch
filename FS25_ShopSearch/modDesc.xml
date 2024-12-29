@@ -3,7 +3,8 @@
     <author>w33zl</author>
     <version>0.5.0.0-dev</version>
     <title>
-        <en>Store Search</en>
+        <de>Suche im Laden</de>
+        <fr>Recherche Dans Les Magasins</fr>
     </title>
     <description>
 <en><![CDATA[
@@ -15,10 +16,28 @@ The search function supports the following fields
 - Mod name (e.g. 'Allis')
 - Mod author (e.g. 'Giants')
 ]]></en>
-    </description>
+    <de><![CDATA[
+Fügt dem Laden im Spiel eine Suchfunktion hinzu. Durch Drücken der F-Taste (konfigurierbar) bei geöffnetem Ladenmenü wird ein Suchdialog angezeigt.
+
+Die Suchfunktion unterstützt die folgenden Felder
+- Gerätename (z.B. 'Vario')
+- Markenname (z.B. 'Massey')
+- Mod-Name (z.B. 'Allis')
+- Mod-Autor (z. B. 'Giants')
+]]></de>
+<fr><![CDATA[
+Ajoute une fonction de recherche au magasin du jeu. En appuyant sur la touche F (configurable) lorsque le menu du magasin est ouvert, une boîte de dialogue de recherche s'affiche.
+
+La fonction de recherche prend en charge les champs suivants
+- Nom de l'équipement (par exemple 'Vario')
+- Nom de la marque (par exemple 'Massey')
+- Nom du modèle (par exemple 'Allis')
+- Auteur de la modification (par ex. 'Giants')
+]]></fr>
+</description>
     <iconFilename>icon_ShopSearch.dds</iconFilename>
     <multiplayer supported="true" />
-    <!-- <l10n filenamePrefix="language" /> -->
+    <l10n filenamePrefix="translation"/>
     <extraSourceFiles>
         <sourceFile filename="lib/LogHelper.lua" />
         <sourceFile filename="lib/ModHelper.lua" />
