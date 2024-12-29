@@ -77,6 +77,158 @@ function ShopSearch:mainKeyEvent()
     end
 end
 
+
+
+function ShopSearch:doSearch(text)
+    -- local v19 = p17:makeSelfCallback(p17.onClickItemCategory)
+    -- p17.pageShopVehicles:initialize(g_storeManager:getCategoryTypes(), g_shopController:getShopCategories(), v19, v18, g_i18n:getText(ShopMenu.L10N_SYMBOL.HEADER_VEHICLES), ShopMenu.SLICE_ID.VEHICLES, ShopMenu.LIST_CELL_NAME_CATEGORY, ShopMenu.LIST_EMPTY_CELL_NAME_CATEGORY)    
+    
+    -- local v142 = g_shopController:getVehicleCategories()[p140]
+    -- p139:popDetail()
+    -- p139:onClickItemCategory(v142.id, g_i18n:getText(ShopMenu.L10N_SYMBOL.HEADER_VEHICLES), v142.label, ShopMenu.SLICE_ID.VEHICLES, p139.currentCategoryFilter)
+
+    -- p171:changeScreen(ShopMenu)
+	-- p171:goToPage(p171.pageShopVehicles)
+	-- p171:onClickItemCategory(ShopController.COINS_CATEGORY, nil, g_i18n:getText("ui_coins"))
+
+			-- p16:addCategoryForDisplay(g_storeManager:getCategoryByName(ShopController.COINS_CATEGORY))
+    local displayItems = self:filterStoreItems(text)
+    self:displaySearchResults(displayItems)
+end
+
+function ShopSearch:filterStoreItems(text)
+    local MAX_ITEMS = 25
+    -- local USE_SIMPLE_SEARCH = true --* NOTE: important! If this is disabled, the search will be case sensitive
+    local displayItems = {}
+
+    
+
+    local function convertTextToPattern(text)
+        text = string.trim(text or "")
+        local pattern = ""
+        -- for each character in x, add it to pattern with both lower and upper case as [aA]
+        for i = 1, #text do
+            pattern = pattern .. "[" .. string.upper(text:sub(i, i)) .. string.lower(text:sub(i, i)) .. "]"
+        end
+        return pattern
+        
+    end
+    local searchText = convertTextToPattern(text)
+
+    local function getAuthorName(storeItem)
+        if not storeItem.isMod or not storeItem.customEnvironment then
+            Log:debug("Not a mod: %s", storeItem.name)
+            return ""
+        end
+        local customEnvironment = storeItem.customEnvironment
+        local mod = g_modManager.nameToMod[customEnvironment]
+        return mod.author or ""
+    end
+
+    local function tryMatch(storeItem, value, weight)
+        if type(value) == "function" then
+            local valueDelegate = value
+            value = valueDelegate(storeItem)
+        end
+        local isMatch = string.find(value, searchText) ~= nil
+        if isMatch then
+            Log:debug("Match: '%s' using value '%s' with pattern '%s'", storeItem.name, value, searchText)
+            storeItem.matchWeight = (storeItem.matchWeight or 0) + weight
+        end
+        return isMatch
+    end
+
+    local function filterStoreItem(i, storeItem)
+        
+        if #displayItems >= MAX_ITEMS then
+            print("skip")
+            return true
+        end
+
+        -- for _, storeItem in pairs(g_storeManager:getItems()) do
+        local isHidden = storeItem.isBundleItem or not (storeItem.showInStore and (storeItem.species == StoreSpecies.VEHICLE or storeItem.species == StoreSpecies.HANDTOOL))
+
+        if isHidden then
+            print("Was hidden")
+            return
+        end
+
+        -- print("search")
+
+        -- if storeItem.isMod then
+        --     Log:debug("%d: Is mod item: %s [%d]", i, storeItem.name, storeItem.id)
+        --     return
+        -- end
+
+        -- local isMod
+        -- if storeItem.customEnvironment == nil then
+        -- 	isMod = false
+        -- else
+        -- 	isMod = storeItem.species == StoreSpecies.VEHICLE
+        -- end
+        -- if not isHidden then
+        --TODO: add match weights and calculate result sort score
+        local isMatch = false
+        isMatch = isMatch or tryMatch(storeItem, storeItem.name, 1.2)
+        isMatch = isMatch or tryMatch(storeItem, storeItem.dlcTitle, 0.9)
+        isMatch = isMatch or tryMatch(storeItem, storeItem.brandNameRaw, 0.7) --TODO: can we improve performance by using brand index and pre-fetch the index?
+        isMatch = isMatch or tryMatch(storeItem, getAuthorName(storeItem), 0.9)
+        if isMatch then
+            local displayItem = g_shopController:makeDisplayItem(storeItem)
+            table.insert(displayItems, displayItem)
+            -- if #displayItems >= MAX_ITEMS then
+            --     return
+            -- end
+        end
+        -- end        
+    end
+
+    local executionTimer = DevHelper.measureStart("Search took %d ms")
+    table.foreach(g_storeManager:getItems(), filterStoreItem)
+    executionTimer:stop()
+
+    return displayItems
+end
+
+function ShopSearch:displaySearchResults(items)
+    local shopMenu = self.shopMenu
+    -- local items = g_shopController:getItemsByCategory(categoryName)
+    shopMenu.currentCategoryName = "misc"
+    shopMenu.currentDisplayItems = items
+    -- shopMenu.currentCategoryFilter = filter
+    shopMenu.currentItemDetailsType = ShopMenu.DETAILS.VEHICLE
+    shopMenu.pageShopItemDetails:setDisplayItems(items)
+    shopMenu:updateSubPageSelector()
+    
+    shopMenu.pageShopItemDetails:setCategory("DRIVABLES", "SEARCH RESULTS", ShopMenu.SLICE_ID.VEHICLES)
+    shopMenu:pushDetail(shopMenu.pageShopItemDetails)
+    shopMenu:updateSubPageSelector()
+end
+
+-- function ShopMenu.viewVehicle(self, vehicleFilename)
+-- 	local vehicleFilename = vehicleFilename:gsub("\\", "/")
+-- 	local basePath = getAppBasePath()
+-- 	if vehicleFilename:startsWith(basePath) then
+-- 		vehicleFilename = vehicleFilename:sub(basePath:len() + 1)
+-- 	end
+-- 	local storeItem = g_storeManager:getItemByXMLFilename(vehicleFilename)
+-- 	if storeItem ~= nil then
+-- 		g_gui:changeScreen(nil, ShopMenu)
+-- 		local category = nil
+-- 		for i = 1, #storeItem.categoryNames do
+-- 			category = g_storeManager:getCategoryByName(storeItem.categoryNames[i])
+-- 			if category ~= nil then
+-- 				break
+-- 			end
+-- 		end
+-- 		if category ~= nil then
+-- 			self:onClickItemCategory(category.name, g_i18n:getText(ShopMenu.L10N_SYMBOL.HEADER_VEHICLES), category.title, self.currentCategoryFilter)
+-- 		end
+-- 		g_shopMenu:showConfigurationScreen(storeItem, nil, nil)
+-- 	end
+-- end
+
+
 function ShopSearch:getItemsByCategory(shopController, superFunc, ...)
     Log:debug("ShopController.getItemsByCategory")
 
