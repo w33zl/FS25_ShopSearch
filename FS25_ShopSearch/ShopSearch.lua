@@ -97,8 +97,7 @@ function ShopSearch:doSearch(text)
 end
 
 function ShopSearch:filterStoreItems(text)
-    local MAX_ITEMS = 25
-    -- local USE_SIMPLE_SEARCH = true --* NOTE: important! If this is disabled, the search will be case sensitive
+    local MAX_ITEMS = 5000
     local displayItems = {}
 
     
