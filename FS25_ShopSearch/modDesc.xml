@@ -3,6 +3,7 @@
     <author>w33zl</author>
     <version>0.5.0.0-dev</version>
     <title>
+        <en>[PREVIEW] Store Search</en>
         <de>Suche im Laden</de>
         <fr>Recherche Dans Les Magasins</fr>
     </title>
@@ -36,12 +37,12 @@ La fonction de recherche prend en charge les champs suivants
 ]]></fr>
 </description>
     <iconFilename>icon_ShopSearch.dds</iconFilename>
-    <multiplayer supported="true" />
+    <multiplayer supported="true"/>
     <l10n filenamePrefix="translation"/>
     <extraSourceFiles>
-        <sourceFile filename="lib/LogHelper.lua" />
-        <sourceFile filename="lib/ModHelper.lua" />
-        <sourceFile filename="ShopSearch.lua" />
+        <sourceFile filename="lib/LogHelper.lua"/>
+        <sourceFile filename="lib/ModHelper.lua"/>
+        <sourceFile filename="ShopSearch.lua"/>
     </extraSourceFiles>
     <inputBinding>
 		<actionBinding action="SEARCH_SHOP">
@@ -49,7 +50,7 @@ La fonction de recherche prend en charge les champs suivants
 		</actionBinding>
     </inputBinding>
     <actions>
-        <action name="SEARCH_SHOP" />
+        <action name="SEARCH_SHOP"/>
 	</actions>        
 
 </modDesc>
