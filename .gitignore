@@ -2,3 +2,11 @@ deploy/output/*
 deploy/7za.exe
 deploy/releases/*
 
+.vscode/*
+deploy/*
+WiKi/InterestingCode_kb.lua
+graphics/*
+.env
+FS25_ShopSearch/modDesc.build
+FS25_ShopSearch/modDesc.xml.bak
+FS25_ShopSearch/.build/*
