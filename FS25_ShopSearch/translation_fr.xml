@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<l10n>
+	<translationContributors>Translated by FSBuild (https://github.com/FSBuild) and DeepL</translationContributors>
+	<texts>
+			<text name="input_SEARCH_SHOP" text="Boutique de recherche"/>
+		<text name="dialogTitle" text="Magasin de recherche :"/>
+		<text name="searchButton" text="Recherche"/>
+		<text name="searchResultsHeader" text="Résultats de la recherche"/>
+</texts></l10n>
