@@ -11,7 +11,7 @@ Changelog:
 
 ShopSearch = Mod:init()
 
-ShopSearch:source("lib/DevHelper.lua")
+ShopSearch:source("scripts/modLib/DevHelper.lua")
 
 -- Event that is executed when your mod is loading (after the map has been loaded and before the game starts)
 function ShopSearch:loadMap(filename)
