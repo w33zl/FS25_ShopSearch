@@ -37,6 +37,7 @@ end
 
 function ShopSearch:mainKeyEvent()
     Log:debug("ShopSearch.mainKeyEvent")
+    self.shopMenu = g_shopMenu
     if g_shopMenu.isOpen then
         Log:debug("Open search...")
         self:showDialog()
@@ -123,12 +124,16 @@ function ShopSearch:filterStoreItems(text)
 end
 
 function ShopSearch:displaySearchResults(items, text)
-    local shopMenu = self.shopMenu
+    local shopMenu = self.shopMenu or g_shopMenu
+    if not shopMenu then
+        Log:warning("ShopMenu not found")
+        return
+    end
     shopMenu.currentCategoryName = "misc"
     shopMenu.currentDisplayItems = items
     shopMenu.currentItemDetailsType = ShopMenu.DETAILS.VEHICLE
     shopMenu.pageShopItemDetails:setDisplayItems(items)
-    shopMenu:updateSubPageSelector()
+    -- shopMenu:updateSubPageSelector()
     
     -- Display text should be max 20 characters from 'text'
     local displayText = string.sub(text, 1, 40)
@@ -136,7 +141,8 @@ function ShopSearch:displaySearchResults(items, text)
 
     shopMenu.pageShopItemDetails:setCategory("SEARCH", headerText, ShopMenu.SLICE_ID.VEHICLES)
     shopMenu:pushDetail(shopMenu.pageShopItemDetails)
-    shopMenu:updateSubPageSelector()
+    -- shopMenu:updateSubPageSelector()
+    shopMenu.pageShopItemDetails:resetListSelection()
 end
 
 function ShopSearch:showDialog()
