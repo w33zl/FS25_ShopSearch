@@ -13,7 +13,7 @@ The search function supports the following fields
 
 
 ## [Want to report a bug or have a great idea?](https://github.com/w33zl/FS25_ShopSearch/issues/new/choose)
-If you want to report a bug or submit an suggestion, please first check the [list of existing issues]() to ensure that you are not adding duplicates (this just consumes my time that could be spent on improving the mods). When you have ensured that your issue is not already reported, you can create a [bug report](https://github.com/w33zl/FS25_ShopSearch/issues/new?template=bug_report.md) or a [feature request](https://github.com/w33zl/FS25_ShopSearch/issues/new?template=feature_request.md).
+If you want to report a bug or submit an suggestion, please first check the [list of existing issues](https://github.com/w33zl/FS25_ShopSearch/issues) to ensure that you are not adding duplicates (this just consumes my time that could be spent on improving the mods). When you have ensured that your issue is not already reported, you can create a [bug report](https://github.com/w33zl/FS25_ShopSearch/issues/new?template=bug_report.md) or a [feature request](https://github.com/w33zl/FS25_ShopSearch/issues/new?template=feature_request.md).
 
 ## [Download](https://www.farming-simulator.com/mod.php?mod_id=310641&title=fs2025)
 
