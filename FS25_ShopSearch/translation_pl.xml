@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Ziuta</translationContributors>
+    <texts>
+        <text name="input_SEARCH_SHOP" text="Wyszukiwarka sklepu" />
+        <text name="dialogTitle" text="Wyszukane:" />
+        <text name="searchButton" text="Wyszukaj" />
+        <text name="searchResultsHeader" text="Wyniki wyszukiwania" />
+    </texts>
+</l10n>
