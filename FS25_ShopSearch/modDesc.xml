@@ -16,6 +16,13 @@ The search function supports the following fields
 - Brand name (e.g. 'Massey')
 - Mod name (e.g. 'Allis')
 - Mod author (e.g. 'Giants')
+
+CHANGELOG:
+
+v1.1.0:
+- FIX: Fixed the incompatabillity with Garage Menu mod [#5]
+- FIX: Search is now properly disabled on sales and the 'other' store categories [#4]
+- NEW: Added UI button to search
 ]]></en>
 <de><![CDATA[
 Fügt dem Laden im Spiel eine Suchfunktion hinzu. Durch Drücken der F-Taste (konfigurierbar) bei geöffnetem Ladenmenü wird ein Suchdialog angezeigt.
