@@ -32,6 +32,13 @@ Die Suchfunktion unterstützt die folgenden Felder
 - Markenname (z.B. 'Massey')
 - Mod-Name (z.B. 'Allis')
 - Mod-Autor (z. B. 'Giants')
+
+CHANGELOG:
+
+v1.1.0:
+- FIX: Die Inkompatibilität mit der Garage Menu Mod wurde behoben [#5].
+- FIX: Die Suche ist jetzt bei Verkäufen und den 'anderen' Shop-Kategorien korrekt deaktiviert [#4]
+- NEW: UI-Schaltfläche für die Suche hinzugefügt
 ]]></de>
 <fr><![CDATA[
 Ajoute une fonction de recherche au magasin du jeu. En appuyant sur la touche F (configurable) lorsque le menu du magasin est ouvert, une boîte de dialogue de recherche s'affiche.
@@ -41,6 +48,13 @@ La fonction de recherche prend en charge les champs suivants
 - Nom de la marque (par exemple 'Massey')
 - Nom du modèle (par exemple 'Allis')
 - Auteur de la modification (par ex. 'Giants')
+
+CHANGELOG :
+
+v1.1.0 :
+- FIXE : Correction de l'incompatibilité avec le mod Garage Menu [#5]
+- CORRECTIF : La recherche est maintenant correctement désactivée sur les ventes et les catégories 'autres' du magasin [#4]
+- NOUVEAU : Ajout d'un bouton d'interface utilisateur pour la recherche
 ]]></fr>
 </description>
     <iconFilename>icon_ShopSearch.dds</iconFilename>
