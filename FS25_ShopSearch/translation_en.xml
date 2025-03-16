@@ -6,5 +6,6 @@
         <text name="dialogTitle" text="Search store:" />
         <text name="searchButton" text="Search" />
         <text name="searchResultsHeader" text="Search Results" />
+        <text name="button_searchStore" text="Search" />
     </texts>
 </l10n>

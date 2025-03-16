@@ -12,6 +12,7 @@ Changelog:
 ShopSearch = Mod:init()
 
 ShopSearch:source("scripts/modLib/DevHelper.lua")
+ShopSearch:source("scripts/modLib/UIHelper.lua")
 
 -- Event that is executed when your mod is loading (after the map has been loaded and before the game starts)
 function ShopSearch:loadMap(filename)
@@ -25,20 +26,15 @@ function ShopSearch:registerHotkeys()
     local success, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.SEARCH_SHOP, self, self.mainKeyEvent, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
 
     if success then
-        Log:debug("Registered main key for XnhancedShopSorting")
+        -- Log:debug("Registered main key for ShopSearch")
         g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
-    -- else
-    --     Log:debug("Failed to register main key for XnhancedShopSorting")
-    --     Log:var("state", success)
-    --     Log:var("actionId", actionEventId)
-    end    
-    
+    end
 end
 
 function ShopSearch:mainKeyEvent()
     Log:debug("ShopSearch.mainKeyEvent")
     self.shopMenu = g_shopMenu
-    if g_shopMenu.isOpen then
+    if g_shopMenu.isOpen and g_shopMenu.searchStoreButton:getIsVisible() then
         Log:debug("Open search...")
         self:showDialog()
     end
@@ -139,10 +135,15 @@ function ShopSearch:displaySearchResults(items, text)
     local displayText = string.sub(text, 1, 40)
     local headerText = g_i18n:getText("searchResultsHeader") .. ": " .. displayText
 
+    if g_shopMenu.currentPage.rootName == "SEARCH" then
+        g_shopMenu:popDetail()
+    end
+
     shopMenu.pageShopItemDetails:setCategory("SEARCH", headerText, ShopMenu.SLICE_ID.VEHICLES)
     shopMenu:pushDetail(shopMenu.pageShopItemDetails)
     -- shopMenu:updateSubPageSelector()
     shopMenu.pageShopItemDetails:resetListSelection()
+    
 end
 
 function ShopSearch:showDialog()
@@ -218,3 +219,26 @@ TabbedMenuWithDetails.onOpen = Utils.overwrittenFunction(TabbedMenuWithDetails.o
     return returnValue
 end)
 
+
+ShopMenu.updateButtonsPanel = Utils.overwrittenFunction(ShopMenu.updateButtonsPanel, function(self, superFunc, ...)
+    local returnValue = superFunc(self, ...)
+    -- local vehiclePage = g_shopMenu.pageShopVehicles
+    -- local isVehicles = g_shopMenu.currentPage == vehiclePage
+    local cp = g_shopMenu.currentPage
+    local showSearch = cp == g_shopMenu.pageShopVehicles or cp == g_shopMenu.pageShopBrands or cp == g_shopMenu.pageShopPacks or cp == g_shopMenu.pageShopDLCs or cp == g_shopMenu.pageShopItemDetails
+
+    local firstButton = g_shopMenu.buttonsPanel.elements[1]
+    g_shopMenu.searchStoreButton = g_shopMenu.searchStoreButton or UIHelper.cloneButton(
+        firstButton, 
+        "searchStoreButton", 
+        g_i18n:getText("button_searchStore"), 
+        InputAction.SEARCH_SHOP, 
+        ShopSearch.mainKeyEvent,
+        ShopSearch
+    )
+
+    g_shopMenu.searchStoreButton:setVisible(showSearch)
+    g_shopMenu.buttonsPanel:invalidateLayout()
+
+    return returnValue
+end)
